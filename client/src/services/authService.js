@@ -19,6 +19,9 @@ const AUTH_SERVICE = {
   },
   logOut: async () => {
     return await service.get('/logout');
+  },
+  loggedIn: async ()=>{
+    return await service.get('/isLogged')
   }
 };
 

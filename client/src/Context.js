@@ -1,6 +1,7 @@
 import React, { Component, createContext } from 'react'
 import { withRouter } from 'react-router-dom'
 import AUTH_SERVICE from './services/authService'
+import PET_SERVICE from './services/petService'
 
 export const MyContext = createContext()
 
@@ -8,7 +9,14 @@ class Context extends Component {
     state = {
         userLogged: null,
         loading: false,
-        sign_form: { username: '', email: '', password: '', confirm_password: ''}
+        sign_form: { username: '', email: '', password: '', confirm_password: ''},
+        pets: []
+    }
+
+    isLogged = async ()=>{
+        const {data} = await AUTH_SERVICE.loggedIn()
+        this.setState({userLogged: data.user})
+        
     }
 
     resetSignForm = () => {
@@ -46,16 +54,28 @@ class Context extends Component {
         return this.state.userLogged
     }
 
-    render() {
-        const { state, handleSingChange, submitSignup,resetSignForm, submitLogin } = this
+    getPets = async ()=>{
+        const {data} = await PET_SERVICE.search().catch( err=> ({data:null}))
+        this.setState({pets: (data) ? data.pets : []})
+    }
 
+    render() {
+        const { 
+            state, 
+            handleSingChange, 
+            submitSignup,
+            resetSignForm, 
+            submitLogin ,
+            getPets
+        } = this
         return (
             <MyContext.Provider value={{
                 state,
                 handleSingChange,
                 submitSignup,
                 resetSignForm,
-                submitLogin
+                submitLogin,
+                getPets
          }}>
                 {this.props.children}
             </MyContext.Provider>

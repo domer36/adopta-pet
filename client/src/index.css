@@ -86,7 +86,7 @@ nav{
   justify-content: space-evenly;
   align-items: center;
   padding: 5px 0;
-  position: absolute;
+  position: fixed;
   display: s;
   bottom: 0;
   background-color: white;
@@ -97,8 +97,39 @@ header{
   justify-content: space-between;
   align-items: center;
   padding: 0 10px;
+  box-sizing: border-box;
   font-size: .8rem;
   width: 100vw;
   height: 50px;
   background-color: white;
+}
+
+.search_pets {
+  width: 100vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 10px;
+  overflow-y: auto;
+  margin-bottom: 50px;
+  box-sizing: border-box;
+}
+
+.search_pets > a > img:hover{
+  box-shadow: 2px 3px 5px 2px rgba(0,0,0,.5);
+  border: 1px solid blue;
+  cursor: pointer;
+}
+
+.search_pets > a > span {
+  color: white;
+  font-size: .8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: relative;
+  width: 25vw;
+  margin-top: -30px;
+  box-sizing: border-box;
+  margin-bottom: 30px;
+  text-shadow: 0 0 2px rgba(255, 0, 234, 0.8)
 }
