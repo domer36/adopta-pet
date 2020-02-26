@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 
 class Navbar extends Component {
     render() {
@@ -7,9 +7,12 @@ class Navbar extends Component {
         
         if( pathname === '/login' || pathname === '/signup') return null
         return (
-            <div>
-                <p>Menu</p>
-            </div>
+            <nav>
+                <Link>Home</Link>
+                <Link>Match</Link>
+                <Link>Chat</Link>
+                <Link>Profile</Link>
+            </nav>
         )
     }
 }

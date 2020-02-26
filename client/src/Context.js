@@ -8,18 +8,18 @@ class Context extends Component {
     state = {
         userLogged: null,
         loading: false,
-        signup_form: { username: '', email: '', password: '', confirm_password: ''}
+        sign_form: { username: '', email: '', password: '', confirm_password: ''}
     }
 
-    resetSignupForm = () => {
-        this.setState({signup_form: {username:'', email: '', password: '', confirm_password: ''}})
+    resetSignForm = () => {
+        this.setState({sign_form: {username:'', email: '', password: '', confirm_password: ''}})
     }
 
-    handleSingupChange = ({target: {name, value}}) => {
+    handleSingChange = ({target: {name, value}}) => {
         this.setState( prev => {return {
             ...prev,
-            signup_form: {
-                ...prev.signup_form,
+            sign_form: {
+                ...prev.sign_form,
                 [name]: value
             }
         }})
@@ -28,21 +28,34 @@ class Context extends Component {
     submitSignup = async ()=>{
         this.setState({loading: true})
         
-        const {data} = await AUTH_SERVICE.signup( this.state.signup_form ).catch( err => ({data: null}))
+        const {data} = await AUTH_SERVICE.signup( this.state.sign_form ).catch( err => ({data: null}))
         
         this.setState({loading: false})
         return (data) ? data.user : null
     }
 
+    submitLogin = async ()=>{
+        this.setState({loading: true})
+        const {email, password} = this.state.sign_form
+        
+        const {data} = await AUTH_SERVICE.login( {email, password} ).catch( err => ({data: null}))
+        
+        this.setState({loading: false})
+        this.setState({userLogged: (data) ? data.user : null})
+        
+        return this.state.userLogged
+    }
+
     render() {
-        const { state, handleSingupChange, submitSignup,resetSignupForm } = this
+        const { state, handleSingChange, submitSignup,resetSignForm, submitLogin } = this
 
         return (
             <MyContext.Provider value={{
                 state,
-                handleSingupChange,
+                handleSingChange,
                 submitSignup,
-                resetSignupForm
+                resetSignForm,
+                submitLogin
          }}>
                 {this.props.children}
             </MyContext.Provider>
