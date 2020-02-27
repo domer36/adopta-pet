@@ -10,6 +10,9 @@ const service = axios.create({withCredentials: true, baseURL})
 const PET_SERVICE = {
     search: async ()=>{
         return await service.get('/')
+    },
+    profile: async (id) => {
+      return await service.get(`/${id}`)
     }
 }
 

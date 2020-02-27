@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 function PetPreview({pet}) {
     return (
-        <Link to={`/profile-pets/${pet._id}`} style={{
+        <Link to={`/profile-pet/${pet._id}`} style={{
             display: 'flex',
             flexDirection: 'column',
             margin: '5px'

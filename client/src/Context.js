@@ -59,6 +59,11 @@ class Context extends Component {
         this.setState({pets: (data) ? data.pets : []})
     }
 
+    getPetProfile = async (id)=>{
+        const {data} = await PET_SERVICE.profile(id).catch( err => ({data: null}))
+        return (data) ? data.pet : null
+    }
+
     render() {
         const { 
             state, 
@@ -66,7 +71,8 @@ class Context extends Component {
             submitSignup,
             resetSignForm, 
             submitLogin ,
-            getPets
+            getPets,
+            getPetProfile
         } = this
         return (
             <MyContext.Provider value={{
@@ -75,7 +81,8 @@ class Context extends Component {
                 submitSignup,
                 resetSignForm,
                 submitLogin,
-                getPets
+                getPets,
+                getPetProfile
          }}>
                 {this.props.children}
             </MyContext.Provider>
