@@ -87,6 +87,30 @@ router.get('/', (req, res) => {
         ]
     })
 })
+.get('/random', (req, res) => {
+
+    const pets = [
+        {
+            _id: 'luchojksdjfkdsjfj',
+            name: 'lucho',
+            image: 'http://localhost:3000/images/pet1.jpg'
+        },
+        {
+            _id: 'lucho2jksdjfkdsjfj',
+            name: 'lucho2',
+            image: 'http://localhost:3000/images/pet2.jpg'
+        },
+        {
+            _id: 'lucho3jksdjfkdsht65jfj',
+            name: 'lucho3',
+            image: 'http://localhost:3000/images/pet3.jpg'
+        }
+    ]
+    const random = Math.floor( Math.random() * pets.length )
+    console.log('random', random);
+    
+    res.status(200).json( {pet: pets[random]} )
+})
 .get('/:id', (req, res) => {
     const {id} = req.params
     res.status(200).json({pet: {
@@ -109,5 +133,6 @@ router.get('/', (req, res) => {
         ]
     }})
 })
+
 
 module.exports = router

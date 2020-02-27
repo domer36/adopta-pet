@@ -189,3 +189,7 @@ header{
 .profile-pet .info .description {
   font-size: .8rem;
 }
+
+.match-image {
+  border-radius: 180px;
+}
