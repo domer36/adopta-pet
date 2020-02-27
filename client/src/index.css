@@ -167,3 +167,25 @@ header{
   padding: 0 18px;
   box-sizing: border-box;
 }
+.profile-pet .info{
+  height: 230px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+}
+.profile-pet .details{
+  margin: 12px 0;
+  box-sizing: border-box;
+}
+.profile-pet .detail{
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid silver;
+  padding: 10px 0;
+  box-sizing: border-box;
+}
+
+.profile-pet .info .description {
+  font-size: .8rem;
+}

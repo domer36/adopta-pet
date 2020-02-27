@@ -94,8 +94,19 @@ router.get('/', (req, res) => {
         name: 'lucho3',
         image: 'http://localhost:3000/images/pet3.jpg',
         age: '2 años',
+        breed: 'pug',
         tags: ['sociable', 'departamento', 'peque', 'amigable', 'jugueton'],
-        description: "Mi nombre es lucho, soy muy amigable me gusta jugar con la pelota y correr."
+        description: "Mi nombre es lucho, soy muy amigable me gusta jugar con la pelota y correr.",
+        details: [
+            {title: 'Vacunado', status: false},
+            {title: 'Desparacitado', status: true},
+            {title: 'Vacunado', status: false},
+            {title: 'Desparacitado', status: true},
+            {title: 'Vacunado', status: false},
+            {title: 'Desparacitado', status: true},
+            {title: 'Vacunado', status: false},
+            {title: 'Desparacitado', status: true},
+        ]
     }})
 })
 
