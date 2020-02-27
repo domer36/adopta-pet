@@ -13,6 +13,9 @@ const PET_SERVICE = {
     },
     profile: async (id) => {
       return await service.get(`/${id}`)
+    },
+    random: async () => {
+      return await service.get('/random')
     }
 }
 
