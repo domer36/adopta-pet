@@ -9,6 +9,7 @@ import Signup from './components/signup';
 import { ThemeProvider } from '@chakra-ui/core';
 import ProfilePet from './components/profile-pet';
 import Match from './components/match/Match';
+import Profile from './components/profile';
 
 const Router = () => (
   <BrowserRouter>
@@ -17,6 +18,7 @@ const Router = () => (
         <Navbar />
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/profile/" component={Profile} />
           <Route exact path="/profile-pet/:id" component={ProfilePet} />
           <Route exact path="/match" component={Match} />
           <Route exact path="/login" component={Login} />
