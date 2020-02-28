@@ -10,7 +10,7 @@ function PetPreview({pet}) {
             margin: '5px'
         }}>
             <Image
-                rounded="full"
+                rounded="10px"
                 size="25vw"
                 src={pet.image}
                 alt={pet.name}

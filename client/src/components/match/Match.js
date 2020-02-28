@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import AUTH_SERVICE from '../../services/authService'
 import PET_SERVICE from '../../services/petService'
-import { Stack, Avatar, Button, Image } from '@chakra-ui/core'
+import { Stack, Avatar, Button, Image, Spinner } from '@chakra-ui/core'
+import { MyContext } from '../../Context'
 
 function Match({history}) {
+    const context = useContext(MyContext)
     const [pet, handlePet] = useState({})
 
-    const getRandom = () => {
-        PET_SERVICE.random()
-        .then( ({data}) => {
-            console.log(data.pet);
-            
-            handlePet(data.pet)
-        })
-        .catch( () => handlePet({}))
+    const getRandom = async () => {
+        const {data: {pet}} = await PET_SERVICE.random()
+        handlePet(pet)
     }
 
+    const nextPet = ()=> getRandom()
+    const viewPet = (id) => history.push('/profile-pet/'+ id)
+
     useEffect(()=> {
-        AUTH_SERVICE.loggedIn().then( ({data}) => {            
-            if(!data){ history.push('/login') 
-            }else{
-                setInterval( getRandom, 8000 )
-            }}
+        AUTH_SERVICE.loggedIn().then( ({data: user}) => {            
+            if(!user){ history.push('/login') 
+            }else getRandom()}
         )
     },[])
+
     return (
         <>
+            {(context.state.loading ? <div className="loading"><Spinner /></div> : null)}
             <header><h2>Find your pet</h2></header>
             <Stack direction="column" alignItems="center" h="100%" padding="20px">
                 <Image className="match-image"
@@ -34,8 +34,8 @@ function Match({history}) {
                     src={pet.image}
                 />
                 <Stack direction="row" justifyContent="space-evenly" mt="5" w="100%">
-                    <Button size="md" w="25%" variantColor="green">Sí</Button>
-                    <Button size="md" w="25%" variantColor="red">No</Button>
+                    <Button size="md" w="25%" variantColor="green" onClick={()=> viewPet(pet._id)}>Sí</Button>
+                    <Button size="md" w="25%" variantColor="red" onClick={nextPet}>No</Button>
                 </Stack>
                 </Stack>
         </>
