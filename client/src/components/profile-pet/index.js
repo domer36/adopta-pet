@@ -15,7 +15,7 @@ function ProfilePet({match: {params: {id: idPet}}, history}) {
                 .catch( () => handlePet({}))
             }}
         )
-    },[])
+    },[idPet, history])
     
     return (
         <>

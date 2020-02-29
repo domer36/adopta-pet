@@ -4,8 +4,8 @@ import { Badge } from '@chakra-ui/core'
 function ProfileDetail({pet}) {
     return (
         <div className="profile-pet">
-                    <img className="portrait" src={pet.image} />
-                    <img className="avatar" src={pet.image} />
+                    <img className="portrait" src={pet.image} alt={pet.name} />
+                    <img className="avatar" src={pet.image} alt={pet.name} />
                     <p className="name">{pet.name}</p>
                     <p>({pet.breed})</p>
                     <p>{pet.age}</p>
@@ -16,8 +16,8 @@ function ProfileDetail({pet}) {
                         <h3>Descripción</h3>
                         <p className="description">{pet.description}</p>
                         <div className="details">
-                            {pet.details.map(detail => (
-                                <div className="detail">
+                            {pet.details.map((detail, i) => (
+                                <div key={i} className="detail">
                                     <span>{detail.title}</span>
                                     <span>{(detail.status) ? 'Sí' : 'No'}</span>
                                 </div>

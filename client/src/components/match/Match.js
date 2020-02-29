@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import AUTH_SERVICE from '../../services/authService'
 import PET_SERVICE from '../../services/petService'
-import { Stack, Avatar, Button, Image, Spinner } from '@chakra-ui/core'
+import { Stack, Button, Image, Spinner } from '@chakra-ui/core'
 import { MyContext } from '../../Context'
 
 function Match({history}) {
@@ -21,7 +21,7 @@ function Match({history}) {
             if(!user){ history.push('/login') 
             }else getRandom()}
         )
-    },[])
+    },[history])
 
     return (
         <>
