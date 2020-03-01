@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Button, Text, Stack, Input, Textarea, Switch, InputGroup, InputLeftAddon } from '@chakra-ui/core'
+import { Button, Text, Stack, Input, Textarea, Switch, InputGroup, InputLeftAddon, useToast } from '@chakra-ui/core'
 import PET_SERVICE from '../../services/petService'
+import AUTH_SERVICE from '../../services/authService'
 
 const initNewPet = {
     name: '',
@@ -17,17 +18,25 @@ const initNewPet = {
 }
 
 function PetRegister({history}) {
+    const toast = useToast()
+
+    AUTH_SERVICE.loggedIn()
+        .catch((err)=>{
+            toast({title: 'Log in first', duration: 2000, status: 'error'})
+            history.push('/login')
+        })
+
+    const [filePhoto, handleFilePhoto] = useState()
+    const [imageTemp, handleImageTemp] = useState()
     const [newPet, handleNewPet] = useState(initNewPet)
 
     const reader = new FileReader()
     
     const ChangeImage = (file) => {
         if(file){
+            handleFilePhoto( file )
             reader.readAsDataURL( file )
-            reader.onloadend = () => handleNewPet({
-                ...newPet,
-                image: reader.result
-            })
+            reader.onloadend = () => handleImageTemp(reader.result)
         }
     }
 
@@ -50,9 +59,18 @@ function PetRegister({history}) {
     const handleClick = () => document.querySelector('input[type="file"]').click()
 
     const CreateRegister = async ()=> {
-        const {data} = await PET_SERVICE.create( newPet ).catch(err => {data: err})
-        console.log(data);
-        
+        if(newPet.name && newPet.breed && newPet.age && newPet.description && filePhoto){
+
+            const formData = new FormData()
+            formData.append('photoURL', filePhoto)
+            formData.append('info', JSON.stringify(newPet))
+
+            const data = await PET_SERVICE.create( formData ).catch(err => (toast({title: 'Has an error to register', status: 'error'})))
+            if(data){ 
+                toast({title: 'Success to created pet', status: 'success', duration: 2000})
+            }
+
+        }else toast({title: "Please fill all the fields.",status: "error", duration: 2000})
     }
 
     return (
@@ -60,10 +78,10 @@ function PetRegister({history}) {
             <header>
                 <Button variant='outline' variantColor='red' size='xs' onClick={() => history.push('/profile')}>Cerrar</Button>
                 <Text fontWeight="bold">Registrar Mascota</Text>
-                <Button variant='outline' variantColor='green' size='xs'>Guardar</Button>
+                <Button variant='outline' variantColor='green' size='xs' onClick={CreateRegister}>Guardar</Button>
             </header>
             <div className="create-pet-register">
-                <img src={newPet.image || ''} alt=""/>
+                <img src={imageTemp} alt=""/>
                 <Button onClick={handleClick} variant="solid" size="xs" variantColor="blue">Cambiar imagen</Button>
                 <input hidden type="file" onChange={({target}) => ChangeImage(target.files[0])} />
                 

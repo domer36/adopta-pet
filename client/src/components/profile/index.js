@@ -1,6 +1,7 @@
 import React from 'react'
 import { MyContext } from '../../Context'
 import { Text } from '@chakra-ui/core';
+import { Link } from 'react-router-dom';
 
 function Profile({history}) {
     return (
@@ -29,6 +30,7 @@ function ShowProfile({profile: {photoURL, username, birth, description}}){
                 </div>
                 <h3>Description</h3>
                 <span>{description}</span>
+                <Link to="/pet-register">Registrar Pet</Link>
         </div>
 
     )
