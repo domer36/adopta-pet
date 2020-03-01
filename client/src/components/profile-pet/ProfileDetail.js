@@ -1,7 +1,7 @@
 import React from 'react'
-import { Badge } from '@chakra-ui/core'
+import { Badge, Button } from '@chakra-ui/core'
 
-function ProfileDetail({pet}) {
+function ProfileDetail({pet, userId}) {
     return (
         <div className="profile-pet">
                     <img className="portrait" src={pet.image} alt={pet.name} />
@@ -30,7 +30,11 @@ function ProfileDetail({pet}) {
                             </div>
          
                         </div>
-                    <button>Adoptar</button>
+                        { pet.user !== userId ? (
+                            <Button variantColor="purple">Adoptar</Button>
+                        ) : (
+                            <p>Ver solicitudes</p>
+                        )}
                     </div>
                 </div>
     )
