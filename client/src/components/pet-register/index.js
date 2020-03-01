@@ -68,6 +68,7 @@ function PetRegister({history}) {
             const data = await PET_SERVICE.create( formData ).catch(err => (toast({title: 'Has an error to register', status: 'error'})))
             if(data){ 
                 toast({title: 'Success to created pet', status: 'success', duration: 2000})
+                history.push('/profile')
             }
 
         }else toast({title: "Please fill all the fields.",status: "error", duration: 2000})
