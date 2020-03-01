@@ -28,7 +28,7 @@ function ShowProfile({profile: {photoURL, username, birth, description}}){
     const age = ((new Date()).getFullYear()-(new Date(birth)).getFullYear()).toString()
     return (
         <div className="profile">
-                <img src={photoURL} alt={username}/>
+                <img src={photoURL} alt={`${username}'s profile`}/>
                 <div className="infoUser">
                     <Text className="username">{username}</Text>
                     <Text className="age">{age} años</Text>

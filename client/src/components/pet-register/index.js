@@ -26,6 +26,7 @@ function PetRegister({history}) {
             history.push('/login')
         })
 
+    const [isLoading, handleLoading] = useState(false)
     const [filePhoto, handleFilePhoto] = useState()
     const [imageTemp, handleImageTemp] = useState()
     const [newPet, handleNewPet] = useState(initNewPet)
@@ -60,18 +61,17 @@ function PetRegister({history}) {
 
     const CreateRegister = async ()=> {
         if(newPet.name && newPet.breed && newPet.age && newPet.description && filePhoto){
-
+            handleLoading(true)
             const formData = new FormData()
             formData.append('photoURL', filePhoto)
             formData.append('info', JSON.stringify(newPet))
 
-            const data = await PET_SERVICE.create( formData ).catch(err => (toast({title: 'Has an error to register', status: 'error'})))
-            if(data){ 
-                toast({title: 'Success to created pet', status: 'success', duration: 2000})
-                history.push('/profile')
-            }
-
+            await PET_SERVICE.create( formData ).catch(err => (toast({title: 'Has an error to register', status: 'error'})))
+            
+            toast({title: 'Success to created pet', status: 'success', duration: 2000})
+            history.push('/profile')
         }else toast({title: "Please fill all the fields.",status: "error", duration: 2000})
+        handleLoading(false)
     }
 
     return (
@@ -79,11 +79,11 @@ function PetRegister({history}) {
             <header>
                 <Button variant='outline' variantColor='red' size='xs' onClick={() => history.push('/profile')}>Cerrar</Button>
                 <Text fontWeight="bold">Registrar Mascota</Text>
-                <Button variant='outline' variantColor='green' size='xs' onClick={CreateRegister}>Guardar</Button>
+                <Button isLoading={isLoading} loadingText="Guardando..." variant='outline' variantColor='green' size='xs' onClick={CreateRegister}>Guardar</Button>
             </header>
             <div className="create-pet-register">
                 <img src={imageTemp} alt=""/>
-                <Button onClick={handleClick} variant="solid" size="xs" variantColor="blue">Cambiar imagen</Button>
+                <Button onClick={handleClick} variant="solid" size="xs" variantColor="blue">Seleccionar imagen</Button>
                 <input hidden type="file" onChange={({target}) => ChangeImage(target.files[0])} />
                 
                 <div>
