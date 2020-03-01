@@ -121,16 +121,11 @@ router.get('/', (req, res) => {
         breed: 'pug',
         tags: ['sociable', 'departamento', 'peque', 'amigable', 'jugueton'],
         description: "Mi nombre es lucho, soy muy amigable me gusta jugar con la pelota y correr.",
-        details: [
-            {title: 'Vacunado', status: false},
-            {title: 'Desparacitado', status: true},
-            {title: 'Vacunado', status: false},
-            {title: 'Desparacitado', status: true},
-            {title: 'Vacunado', status: false},
-            {title: 'Desparacitado', status: true},
-            {title: 'Vacunado', status: false},
-            {title: 'Desparacitado', status: true},
-        ]
+        details: {
+            vacunado: true,
+            desparacitado: false,
+            esterilizado: true
+        }
     }})
 })
 
