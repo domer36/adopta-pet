@@ -15,12 +15,14 @@ class Home extends Component {
     const { pets } = this.context.state
     return (
       <MyContext.Consumer>
-        { context => (
+        { () => (
           <>
             <header><h2>Search</h2></header>
+            {pets && (
             <div className="search_pets">
               {pets.map((pet, i) => <PetPreview key={i} pet={pet} />)}
             </div>
+            )}
           </>
         )}
       </MyContext.Consumer>
