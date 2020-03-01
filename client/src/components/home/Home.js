@@ -20,7 +20,7 @@ class Home extends Component {
             <header><h2>Search</h2></header>
             {pets && (
             <div className="search_pets">
-              {pets.map((pet, i) => <PetPreview key={i} pet={pet} />)}
+              {pets.map((pet, i) => <PetPreview ShowName size="25vw" key={i} pet={pet} />)}
             </div>
             )}
           </>

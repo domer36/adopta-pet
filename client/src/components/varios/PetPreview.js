@@ -1,21 +1,26 @@
 import React from 'react'
 import { Image } from '@chakra-ui/core'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
-function PetPreview({pet}) {
+function PetPreview({pet, ShowName, size}) {
     return (
         <Link to={`/profile-pet/${pet._id}`} style={{
-            display: 'flex',
+            display: 'inline-block',
             flexDirection: 'column',
-            margin: '5px'
+            margin: '5px',
+            width:{size}
         }}>
             <Image
                 rounded="10px"
-                size="25vw"
+                width={size}
+                size={size}
                 src={pet.image}
                 alt={pet.name}
                 />
-            <span>{pet.name}</span>
+                {ShowName ?(
+                    <span>{pet.name}</span>
+
+                ):(null)}
         </Link>
     )
 }

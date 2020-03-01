@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react'
 import { MyContext } from '../../Context'
-import { Text, useToast, Button, Textarea, Stack } from '@chakra-ui/core';
+import { Text, useToast, Button, Textarea, Stack, Alert } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 import AUTH_SERVICE from '../../services/authService';
+import PetPreview from '../varios/PetPreview';
 
 function Profile({history}) {
     const toast = useToast()
@@ -20,7 +21,7 @@ function Profile({history}) {
             {context =>{
                 return ( <>
                             {context.state.userLogged 
-                            ? <ShowProfile profile={context.state.userLogged} /> 
+                            ? <ShowProfile profile={context.state.userLogged} history={history} /> 
                             : (<>{history.push('/login')}</>)}
                         </>)
             }}
@@ -28,7 +29,7 @@ function Profile({history}) {
     )
 }
 
-function ShowProfile({profile: {photoURL, username, birth, description}}){
+function ShowProfile({history, profile: {photoURL, username, birth, description}}){
     const age = ((new Date()).getFullYear()-(new Date(birth)).getFullYear()).toString()
     const toast = useToast()
     const context = useContext(MyContext)
@@ -49,7 +50,7 @@ function ShowProfile({profile: {photoURL, username, birth, description}}){
         }
     }
     const handleImageSelect = ()=> document.querySelector('input[type="file"]').click()
-    
+    const {pets_register} = context.state.userLogged
     return (
         <div className="profile">
                 <img src={photoURL} alt={`${username}'s profile`}/>
@@ -66,12 +67,26 @@ function ShowProfile({profile: {photoURL, username, birth, description}}){
                         alignSelf="flex-end"
                         onClick={handleImageSelect}
                     >Cambiar Imagen</Button>
-                    
-
                 </Stack>
+                <Stack padding="5px 8px">
+                {pets_register.length 
+                    ? (<Alert status="info">Mascotas Publicadas</Alert>) 
+                    : (<Alert status="warning">No tienes mascotas publicadas</Alert>)
+                }
 
+                <div style={{
+                    display: 'flex',
+                    flexWrap:'wrap',
+                    justifyContent: 'space-evenly',
+                    width: "100%",
+                    overflowX: "auto",
+                    height: "105px"
+                }}>
+                    {pets_register.map( pet => <PetPreview size="100px" key={pet._id} pet={pet} />)}
+                </div>
                 <input type="file" name="photoURL" onChange={handleChangePhotoURL} hidden/>
-                <Link to="/pet-register">Registrar Pet</Link>
+                <Button leftIcon="edit" variantColor="purple" mt="2" width="50%" alignSelf="center" onClick={()=>history.push("/pet-register")}>Registrar Nuevo</Button>
+                </Stack>
         </div>
 
     )
