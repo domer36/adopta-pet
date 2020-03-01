@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Text, Stack, Input, Textarea, Switch, InputGroup, InputLeftAddon } from '@chakra-ui/core'
+import PET_SERVICE from '../../services/petService'
 
 const initNewPet = {
     name: '',
@@ -47,6 +48,12 @@ function PetRegister({history}) {
     }
 
     const handleClick = () => document.querySelector('input[type="file"]').click()
+
+    const CreateRegister = async ()=> {
+        const {data} = await PET_SERVICE.create( newPet ).catch(err => {data: err})
+        console.log(data);
+        
+    }
 
     return (
         <div>
