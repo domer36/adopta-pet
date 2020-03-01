@@ -71,7 +71,6 @@ function ShowProfile({profile: {photoURL, username, birth, description}}){
                 </Stack>
 
                 <input type="file" name="photoURL" onChange={handleChangePhotoURL} hidden/>
-                
                 <Link to="/pet-register">Registrar Pet</Link>
         </div>
 

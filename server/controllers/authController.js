@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const Pets = require('../models/Pet')
 
 exports.isAuth = (req, res, next) => req.isAuthenticated() 
                                         ? next() 
@@ -14,7 +15,10 @@ exports.signup = (req, res) => {
 
 exports.login =  (req, res, next) => {
     const { user } = req
-    res.status(200).json({ user })
+    Pets.find({user: user._id} ).then(pets_register => {
+        user['pets_register'] = pets_register
+        res.status(200).json({ user })
+    })
 }
 
 exports.logout = (req, res, next) => {
@@ -23,7 +27,7 @@ exports.logout = (req, res, next) => {
 }
 
 exports.getProfile = (req, res, next) => {
-    User.findById(req.user._id)
+    User.findById(req.user._id).populate('pets_register')
       .then((user) => res.status(200).json({ user }))
       .catch((err) => res.status(500).json({ err }))
 }
