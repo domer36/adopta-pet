@@ -27,3 +27,10 @@ exports.getProfile = (req, res, next) => {
       .then((user) => res.status(200).json({ user }))
       .catch((err) => res.status(500).json({ err }))
 }
+
+exports.uploadPhoto = async (req, res) => {
+    const {_id} = req.user
+    const {secure_url: photoURL} = req.file
+    await User.update({_id}, {photoURL})
+    res.status(201).json(req.file)
+}

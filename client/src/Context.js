@@ -19,6 +19,16 @@ class Context extends Component {
         
     }
 
+    handleUpdateUserProfile = ({target: {name, value}}) => {
+        this.setState(prev => ({
+            ...prev,
+            userLogged: {
+                ...prev.userLogged,
+                [name]: value
+            }
+        }))
+    }
+
     resetSignForm = () => {
         this.setState({sign_form: {username:'', email: '', password: '', confirm_password: ''}})
     }
@@ -74,7 +84,8 @@ class Context extends Component {
             resetSignForm, 
             submitLogin ,
             getPets,
-            getPetProfile
+            getPetProfile,
+            handleUpdateUserProfile
         } = this
         return (
             <MyContext.Provider value={{
@@ -84,7 +95,8 @@ class Context extends Component {
                 resetSignForm,
                 submitLogin,
                 getPets,
-                getPetProfile
+                getPetProfile,
+                handleUpdateUserProfile
          }}>
                 {this.props.children}
             </MyContext.Provider>

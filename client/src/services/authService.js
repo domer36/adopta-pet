@@ -8,21 +8,17 @@ process.env.NODE_ENV === 'production'
 const service = axios.create({ withCredentials: true, baseURL });
 
 const AUTH_SERVICE = {
-  test: async () => {
-    return await service.get('/');
-  },
-  signup: async (user) => {
-    return await service.post('/signup', user);
-  },
-  login: async (user) => {
-    return await service.post('/login', user);
-  },
-  logOut: async () => {
-    return await service.get('/logout');
-  },
-  loggedIn: async ()=>{
-    return await service.get('/isLogged')
-  }
+  test: async () => await service.get('/'),
+
+  signup: async (user) => await service.post('/signup', user),
+
+  login: async (user) => await service.post('/login', user),
+
+  logOut: async () => await service.get('/logout'),
+
+  loggedIn: async ()=> await service.get('/isLogged'),
+
+  uploadPhoto: async (file)=> await service.post('/upload_photo', file)
 };
 
 export default AUTH_SERVICE;
