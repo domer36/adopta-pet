@@ -4,7 +4,13 @@ const PLM = require('passport-local-mongoose');
 const userSchema = new Schema(
   {
     email: String,
-    username: String
+    username: String,
+    pets_register: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Pet'
+      }
+    ]
   },
   {
     timestamps: true,
