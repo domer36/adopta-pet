@@ -8,15 +8,13 @@ process.env.NODE_ENV === 'production'
 const service = axios.create({withCredentials: true, baseURL})
 
 const PET_SERVICE = {
-    search: async ()=>{
-        return await service.get('/')
-    },
-    profile: async (id) => {
-      return await service.get(`/${id}`)
-    },
-    random: async () => {
-      return await service.get('/random')
-    }
+    search: async ()=> await service.get('/'),
+
+    profile: async (id) => await service.get(`/${id}`),
+
+    random: async () => await service.get('/random'),
+
+    create: async (newPet) => await service.post('/', newPet)
 }
 
 export default PET_SERVICE

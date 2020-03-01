@@ -1,6 +1,24 @@
 const router = require('express').Router()
+const cloudinary = require('../config/cloudinary')
+const Pet = require('../models/Pet')
+const User = require('../models/User')
+const {isAuth} = require('../controllers/authController')
 
-router.get('/', (req, res) => {
+router.post('/', isAuth, cloudinary.single('photoURL'), async (req, res) => {
+    const {secure_url: image} = req.file
+    const info =  JSON.parse( req.body.info )
+    const {_id: userId} = req.user
+    const newPet = {
+        ...info,
+        image,
+        user: userId
+    }
+
+    const pet = await Pet.create( newPet ).catch( () => res.status(500).send('Error to register a pet'))
+    await User.update({_id: userId}, {$push: {pets_register: pet._id}}).catch( ()=> res.status(500).send('Error to push pet into user.'))
+    return res.status(201).json(pet)
+})
+.get('/', (req, res) => {
     
     res.status(200).json({
         pets: [
@@ -121,16 +139,11 @@ router.get('/', (req, res) => {
         breed: 'pug',
         tags: ['sociable', 'departamento', 'peque', 'amigable', 'jugueton'],
         description: "Mi nombre es lucho, soy muy amigable me gusta jugar con la pelota y correr.",
-        details: [
-            {title: 'Vacunado', status: false},
-            {title: 'Desparacitado', status: true},
-            {title: 'Vacunado', status: false},
-            {title: 'Desparacitado', status: true},
-            {title: 'Vacunado', status: false},
-            {title: 'Desparacitado', status: true},
-            {title: 'Vacunado', status: false},
-            {title: 'Desparacitado', status: true},
-        ]
+        details: {
+            vacunado: true,
+            desparacitado: false,
+            esterilizado: true
+        }
     }})
 })
 

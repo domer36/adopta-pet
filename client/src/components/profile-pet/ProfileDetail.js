@@ -16,12 +16,19 @@ function ProfileDetail({pet}) {
                         <h3>Descripción</h3>
                         <p className="description">{pet.description}</p>
                         <div className="details">
-                            {pet.details.map((detail, i) => (
-                                <div key={i} className="detail">
-                                    <span>{detail.title}</span>
-                                    <span>{(detail.status) ? 'Sí' : 'No'}</span>
-                                </div>
-                            ))}
+                            <div className="detail">
+                                <span>Vacunado</span>
+                                <span>{(pet.details.vacunado) ? 'Sí' : 'No'}</span>
+                            </div>
+                            <div className="detail">
+                                <span>Esterilizado</span>
+                                <span>{(pet.details.esterilizado) ? 'Sí' : 'No'}</span>
+                            </div>
+                            <div className="detail">
+                                <span>Desparacitado</span>
+                                <span>{(pet.details.desparacitado) ? 'Sí' : 'No'}</span>
+                            </div>
+         
                         </div>
                     <button>Adoptar</button>
                     </div>
