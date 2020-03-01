@@ -17,7 +17,7 @@ exports.RegisterPet = async (req, res) => {
 }
 
 exports.GetPets = async (req, res) => {
-    const pets = await Pet.find({},{_id:1, name: 1, image: 1})
+    const pets = await Pet.find({user: {$ne: req.user._id}},{_id:1, name: 1, image: 1})
     res.status(200).json({pets})
 }
 
@@ -28,7 +28,7 @@ exports.GetPet = async (req, res) => {
 }
 
 exports.GetRandomPet =  async (req, res) => {
-    const pets = await Pet.find()
+    const pets = await Pet.find({user: {$ne: req.user._id}})
     const random = Math.floor( Math.random() * pets.length )
     res.status(200).json( {pet: pets[random]} )
 }

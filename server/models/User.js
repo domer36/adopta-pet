@@ -5,6 +5,10 @@ const userSchema = new Schema(
   {
     email: String,
     username: String,
+    photoURL: {
+      type: String,
+      default: process.env.DEFAULT_PHOTO
+    },
     pets_register: [
       {
         type: Schema.Types.ObjectId,
