@@ -99,13 +99,13 @@ function ShowProfile({history, profile: {photoURL, username, birth, description}
                     flexWrap:'wrap',
                     justifyContent: 'space-evenly',
                     width: "100%",
-                    overflowX: "auto",
-                    height: "105px"
+                    
+                    
                 }}>
                     {pets_register.map( pet => <PetPreview size="100px" key={pet._id} pet={pet} />)}
                 </div>
                 <input type="file" name="photoURL" onChange={handleChangePhotoURL} hidden/>
-                <Button leftIcon="edit" variantColor="purple" mt="2" mb="5" width="50%" alignSelf="center" onClick={()=>history.push("/pet-register")}>Registrar Nuevo</Button>
+                <Button leftIcon="edit" variantColor="purple" mt="2" marginBottom="50px" width="50%" alignSelf="center" onClick={()=>history.push("/pet-register")}>Registrar Nuevo</Button>
                 </Stack>
         </div>
 

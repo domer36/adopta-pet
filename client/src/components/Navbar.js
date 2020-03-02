@@ -8,10 +8,10 @@ class Navbar extends Component {
         if( pathname === '/login' || pathname === '/signup') return null
         return (
             <nav>
-                <NavLink to="/">Home</NavLink>
-                <NavLink to="/match">Match</NavLink>
-                <NavLink to="/chat">Chat</NavLink>
-                <NavLink to="/profile">Profile</NavLink>
+                <NavLink activeClassName="NavLinkActive" exact to="/">Home</NavLink>
+                <NavLink activeClassName="NavLinkActive" to="/match">Match</NavLink>
+                <NavLink activeClassName="NavLinkActive" to="/chat">Chat</NavLink>
+                <NavLink activeClassName="NavLinkActive" to="/profile">Profile</NavLink>
             </nav>
         )
     }
