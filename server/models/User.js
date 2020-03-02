@@ -18,7 +18,7 @@ const userSchema = new Schema(
     pets_requested: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Pet'
+        ref: 'Request'
       }
     ]
   },

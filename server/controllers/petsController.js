@@ -39,10 +39,11 @@ exports.PutRequest = async (req, res) => {
     const {_id: requester} = req.user
 
     const pet = await Pet.update({_id:id}, {$addToSet: {requester}})
-    await User.update({_id: requester}, {$addToSet: {pets_requested: id}})
-
     const foundRequest = await Request.find({$and: [{user: requester}, {pet: id}]})
     
-    if(!foundRequest.length) await Request.create({user: requester, pet: id})
+    if(!foundRequest.length) Request.create({user: requester, pet: id}).then( async request => {
+        await User.update({_id: requester}, {$addToSet: {pets_requested: request._id}})
+    })
+
     res.status(201).json({pet})
 }

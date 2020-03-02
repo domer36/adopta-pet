@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const Pets = require('../models/Pet')
+const Request = require('../models/Request')
 
 exports.isAuth = (req, res, next) => req.isAuthenticated() 
                                         ? next() 
@@ -13,12 +14,11 @@ exports.signup = (req, res) => {
         .catch((err) => res.status(500).json({ err }))
 }
 
-exports.login =  (req, res, next) => {
+exports.login =  async (req, res, next) => {
     const { user } = req
-    Pets.find({user: user._id} ).then(pets_register => {
-        user['pets_register'] = pets_register
-        res.status(200).json({ user })
-    })
+
+    const cur_user = await User.findOne({_id: user._id}).populate('pets_requested').populate('pets_register')
+    res.status(200).json({user: cur_user})
 }
 
 exports.logout = (req, res, next) => {
@@ -26,8 +26,8 @@ exports.logout = (req, res, next) => {
     res.status(200).json({ msg: 'Logged out' })
 }
 
-exports.getProfile = (req, res, next) => {
-    User.findById(req.user._id).populate('pets_register')
+exports.getProfile = async (req, res, next) => {
+    await User.findById(req.user._id).populate('pets_register').populate('pets_requested')
       .then((user) => res.status(200).json({ user }))
       .catch((err) => res.status(500).json({ err }))
 }
