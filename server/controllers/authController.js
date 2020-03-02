@@ -7,9 +7,9 @@ exports.isAuth = (req, res, next) => req.isAuthenticated()
                                         : res.status(401).json({ msg: 'Log in first' })
 
 exports.signup = (req, res) => {
-    const { username, email, password } = req.body
+    const { username, email, password, birth } = req.body
 
-    User.register( {username, email}, password)
+    User.register( {username, email, birth}, password)
         .then((user) => res.status(201).json({ user }))
         .catch((err) => res.status(500).json({ err }))
 }
