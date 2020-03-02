@@ -17,7 +17,12 @@ exports.signup = (req, res) => {
 exports.login =  async (req, res, next) => {
     const { user } = req
 
-    const cur_user = await User.findOne({_id: user._id}).populate('pets_requested').populate('pets_register')
+    const cur_user = await User.findOne({_id: user._id}).populate({
+        path: 'pets_requested',
+        populate: {
+            path: 'pet'
+        }
+    }).populate('pets_register')
     res.status(200).json({user: cur_user})
 }
 

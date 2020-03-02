@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { MyContext } from '../../Context'
-import { Text, useToast, Button, Textarea, Stack, Alert } from '@chakra-ui/core';
+import { Text, useToast, Button, Textarea, Stack, Alert, Box } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 import AUTH_SERVICE from '../../services/authService';
 import PetPreview from '../varios/PetPreview';
@@ -50,7 +50,7 @@ function ShowProfile({history, profile: {photoURL, username, birth, description}
         }
     }
     const handleImageSelect = ()=> document.querySelector('input[type="file"]').click()
-    const {pets_register} = context.state.userLogged
+    const {pets_register, pets} = context.state.userLogged
     return (
         <div className="profile">
                 <img src={photoURL} alt={`${username}'s profile`}/>
@@ -68,6 +68,9 @@ function ShowProfile({history, profile: {photoURL, username, birth, description}
                         onClick={handleImageSelect}
                     >Cambiar Imagen</Button>
                 </Stack>
+                <Box>
+
+                </Box>
                 <Stack padding="5px 8px">
                 {pets_register.length 
                     ? (<Alert status="info">Mascotas Publicadas</Alert>) 
