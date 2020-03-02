@@ -32,9 +32,8 @@ exports.logout = (req, res, next) => {
 }
 
 exports.getProfile = async (req, res, next) => {
-    await User.findById(req.user._id).populate('pets_register').populate('pets_requested')
-      .then((user) => res.status(200).json({ user }))
-      .catch((err) => res.status(500).json({ err }))
+    const user = await getUserProfile(req)
+    res.status(200).json({user: user})
 }
 
 exports.uploadPhoto = async (req, res) => {
@@ -42,4 +41,15 @@ exports.uploadPhoto = async (req, res) => {
     const {secure_url: photoURL} = req.file
     await User.update({_id}, {photoURL})
     res.status(201).json(req.file)
+}
+
+async function getUserProfile(req){
+    const { user } = req
+    const userFound = await User.findOne({_id: user._id}).populate({
+        path: 'pets_requested',
+        populate: {
+            path: 'pet'
+        }
+    }).populate('pets_register')
+    return userFound
 }

@@ -19,7 +19,9 @@ function Profile({history}) {
     return (
         <MyContext.Consumer>
             {context =>{
+                context.updateProfile()
                 return ( <>
+
                             {context.state.userLogged 
                             ? <ShowProfile profile={context.state.userLogged} history={history} /> 
                             : (<>{history.push('/login')}</>)}
@@ -103,7 +105,7 @@ function ShowProfile({history, profile: {photoURL, username, birth, description}
                     {pets_register.map( pet => <PetPreview size="100px" key={pet._id} pet={pet} />)}
                 </div>
                 <input type="file" name="photoURL" onChange={handleChangePhotoURL} hidden/>
-                <Button leftIcon="edit" variantColor="purple" mt="2" width="50%" alignSelf="center" onClick={()=>history.push("/pet-register")}>Registrar Nuevo</Button>
+                <Button leftIcon="edit" variantColor="purple" mt="2" mb="5" width="50%" alignSelf="center" onClick={()=>history.push("/pet-register")}>Registrar Nuevo</Button>
                 </Stack>
         </div>
 

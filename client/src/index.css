@@ -90,6 +90,7 @@ nav{
   display: s;
   bottom: 0;
   background-color: white;
+  z-index: 99;
 }
 
 header{
@@ -298,5 +299,9 @@ header{
 
   .profile-pet .details > div{
     padding: 20px 0;
+  }
+
+  nav{
+    top: 0;
   }
 }

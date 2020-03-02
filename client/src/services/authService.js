@@ -18,6 +18,8 @@ const AUTH_SERVICE = {
 
   loggedIn: async ()=> await service.get('/isLogged'),
 
+  getProfile: async ()=> await service.get('/profile'),
+
   uploadPhoto: async (file)=> await service.post('/upload_photo', file)
 };
 

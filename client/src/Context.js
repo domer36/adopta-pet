@@ -16,7 +16,13 @@ class Context extends Component {
     isLogged = async ()=>{
         const {data} = await AUTH_SERVICE.loggedIn()
         this.setState({userLogged: data.user})
-        
+        return data.user || false
+    }
+
+    updateProfile = async ()=> {
+        const {data} = await AUTH_SERVICE.getProfile()
+        this.setState({userLogged: data.user || {}})
+        return data.user || false
     }
 
     handleUpdateUserProfile = ({target: {name, value}}) => {
@@ -85,7 +91,8 @@ class Context extends Component {
             submitLogin ,
             getPets,
             getPetProfile,
-            handleUpdateUserProfile
+            handleUpdateUserProfile,
+            updateProfile
         } = this
         return (
             <MyContext.Provider value={{
@@ -96,7 +103,8 @@ class Context extends Component {
                 submitLogin,
                 getPets,
                 getPetProfile,
-                handleUpdateUserProfile
+                handleUpdateUserProfile,
+                updateProfile
          }}>
                 {this.props.children}
             </MyContext.Provider>

@@ -4,7 +4,7 @@ const Request = require('../models/Request')
 
 exports.RegisterPet = async (req, res) => {
     const {secure_url: image} = req.file
-    const info =  JSON.parse( req.body.info )
+    const info =  JSON.parse( req.body.info ) 
     const {_id: userId} = req.user
     const newPet = {
         ...info,
