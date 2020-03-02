@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const Pet = require('../models/Pet')
+const Request = require('../models/Request')
 
 exports.RegisterPet = async (req, res) => {
     const {secure_url: image} = req.file
@@ -39,5 +40,9 @@ exports.PutRequest = async (req, res) => {
 
     const pet = await Pet.update({_id:id}, {$addToSet: {requester}})
     await User.update({_id: requester}, {$addToSet: {pets_requested: id}})
+
+    const foundRequest = await Request.find({$and: [{user: requester}, {pet: id}]})
+    
+    if(!foundRequest.length) await Request.create({user: requester, pet: id})
     res.status(201).json({pet})
 }
