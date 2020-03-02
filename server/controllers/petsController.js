@@ -24,7 +24,12 @@ exports.GetPets = async (req, res) => {
 
 exports.GetPet = async (req, res) => {
     const {id} = req.params
-    const pet = await Pet.findOne({_id: id})
+    const pet = await Pet.findOne({_id: id}).populate({
+        path: 'requester',
+        populate: {
+            path: 'user'
+        }
+    })
     res.status(200).json({pet})
 }
 
@@ -38,12 +43,18 @@ exports.PutRequest = async (req, res) => {
     const {id} = req.params
     const {_id: requester} = req.user
 
-    const pet = await Pet.update({_id:id}, {$addToSet: {requester}})
     const foundRequest = await Request.find({$and: [{user: requester}, {pet: id}]})
+    console.log(foundRequest);
     
-    if(!foundRequest.length) Request.create({user: requester, pet: id}).then( async request => {
-        await User.update({_id: requester}, {$addToSet: {pets_requested: request._id}})
-    })
+    
+    if(!foundRequest.length) {
+        Request.create({user: requester, pet: id}).then( async request => {
+            await Pet.updateOne({_id:id}, {$addToSet: {requester: request._id}})
+            await User.updateOne({_id: requester}, {$addToSet: {pets_requested: request._id}})
+            console.log('aqui');
+            
+            return res.status(201).json({request})
+        }).catch(err => console.log('error', err))
+    }
 
-    res.status(201).json({pet})
 }

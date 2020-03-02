@@ -19,7 +19,7 @@ const PetSchema = new Schema({
         requester: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'User'
+                ref: 'Request'
             }
         ]
 })
