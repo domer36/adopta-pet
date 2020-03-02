@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { MyContext } from '../../Context'
-import { Text, useToast, Button, Textarea, Stack, Alert, Box } from '@chakra-ui/core';
+import { Text, useToast, Button, Textarea, Stack, Alert, Box, Badge, Image, Flex } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 import AUTH_SERVICE from '../../services/authService';
 import PetPreview from '../varios/PetPreview';
@@ -50,7 +50,7 @@ function ShowProfile({history, profile: {photoURL, username, birth, description}
         }
     }
     const handleImageSelect = ()=> document.querySelector('input[type="file"]').click()
-    const {pets_register, pets} = context.state.userLogged
+    const {pets_register, pets_requested} = context.state.userLogged
     return (
         <div className="profile">
                 <img src={photoURL} alt={`${username}'s profile`}/>
@@ -68,9 +68,24 @@ function ShowProfile({history, profile: {photoURL, username, birth, description}
                         onClick={handleImageSelect}
                     >Cambiar Imagen</Button>
                 </Stack>
-                <Box>
+                    {pets_requested.length 
+                        ? (
+                            <>
+                                <Alert status="info">Solicitudes</Alert>
+                                <Flex flexDirection="row" wrap="wrap" width="100%" padding="5px 8px" justifyContent="space-between">
 
-                </Box>
+                                    {pets_requested.map( request => (
+                                        <Stack key={request._id} size="110px">
+                                            <Image src={request.pet.image} height="100px" />
+                                            <Badge marginTop="-30px" variantColor="purple">{request.status}</Badge>
+                                        </Stack>
+                                    ))}
+                                </Flex>
+                            </>
+                        )
+                        : (null)
+                    }
+                
                 <Stack padding="5px 8px">
                 {pets_register.length 
                     ? (<Alert status="info">Mascotas Publicadas</Alert>) 

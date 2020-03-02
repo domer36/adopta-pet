@@ -21,7 +21,7 @@ function PetPreview({pet, ShowName, size}) {
                 
                     <span>{pet.name}</span>
 
-                ):(<Badge rounded="180px" size="1.5rem" marginTop="-50px" justifySelf="flex-end">{pet.requester.length || 0}</Badge>)}
+                ):(<Badge variantColor="purple" rounded="180px" size="1.5rem" marginTop="-50px" justifySelf="flex-end">{pet.requester.length || 0}</Badge>)}
         </Link>
     )
 }
