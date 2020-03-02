@@ -5,6 +5,7 @@ const userSchema = new Schema(
   {
     email: String,
     username: String,
+    birth: String,
     photoURL: {
       type: String,
       default: process.env.DEFAULT_PHOTO
