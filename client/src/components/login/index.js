@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
 import { MyContext } from '../../Context'
-import { Spinner, useToast } from '@chakra-ui/core'
+import {  useToast, Button, Input, Stack, InputGroup, InputLeftElement, Icon, Text } from '@chakra-ui/core'
 import { Link } from 'react-router-dom'
+import { FaUser, FaKey } from 'react-icons/fa';
 
 function Login(props) {
     const toast = useToast()
@@ -9,19 +10,30 @@ function Login(props) {
 
     const Login = async ()=>{
         if( await context.submitLogin() ) return props.history.push('/')
-        return toast({ title: 'Error to signin', status: 'error', duration: '2000', isClosable: false })
+        return toast({ title: 'Error to login', status: 'error', duration: '2000', isClosable: false })
     }
 
     return (
         <MyContext.Consumer>
             {context => (
                 <div className="loginForm">
-                    {(context.state.loading ? <div className="loading"><Spinner /></div> : null)}
-                    <h2>Sign In</h2>
-                    <input type="text" name="email" placeholder="Email" value={context.state.sign_form.email} onChange={context.handleSingChange}/>
-                    <input type="password" name="password" placeholder="Password" value={context.state.sign_form.password} onChange={context.handleSingChange}/>
-                    <button onClick={Login}>Login</button>
-                    <span>Dont have an account yet, <Link to="/signup">Sign up</Link></span>
+                    
+                    <Text fontWeight="bold">Log In</Text>
+                    <Stack spacing={4}>
+                        <InputGroup>
+                            <InputLeftElement children={<FaUser color="silver"/>} />
+                            <Input rounded="10px" type="text" placeholder="Email" name="email" />
+                        </InputGroup>
+
+                        <InputGroup>
+                            <InputLeftElement children={<FaKey color="silver"/>}/>
+                            <Input rounded="10px" type="password" placeholder="Password" name="password" />
+                        </InputGroup>
+                        <Button isLoading={context.state.loading} loadingText="Please wait..." variantColor="purple"  onClick={Login}>Login</Button>
+                    </Stack>
+                    {/* <Input type="text" name="email" placeholder="Email" value={context.state.sign_form.email} onChange={context.handleSingChange}/>
+                    <Input type="password" name="password" placeholder="Password" value={context.state.sign_form.password} onChange={context.handleSingChange}/> */}
+                    <span>Dont have an account yet, <Link to="/signup"><Text fontWeight="bold">Sign up</Text></Link></span>
                 </div>
             )}
         </MyContext.Consumer>
