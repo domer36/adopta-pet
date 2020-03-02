@@ -15,8 +15,13 @@ const PetSchema = new Schema({
         user: {
             type: Schema.Types.ObjectId,
             ref: 'User'
-        }
-      
+        },
+        requester: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'User'
+            }
+        ]
 })
 
 module.exports = model('Pet', PetSchema)

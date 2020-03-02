@@ -32,3 +32,11 @@ exports.GetRandomPet =  async (req, res) => {
     const random = Math.floor( Math.random() * pets.length )
     res.status(200).json( {pet: pets[random]} )
 }
+
+exports.PutRequest = async (req, res) => {
+    const {id} = req.params
+    const {_id: requester} = req.user
+
+    const pet = await Pet.update({_id:id}, {$push: {requester}})
+    res.status(201).json({pet})
+}
