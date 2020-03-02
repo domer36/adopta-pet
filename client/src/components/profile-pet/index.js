@@ -20,7 +20,7 @@ function ProfilePet({match: {params: {id: idPet}}, history}) {
     return (
         <>
             { (pet && pet.tags && context.state.userLogged) ? (
-                <ProfileDetail pet={pet} userId={context.state.userLogged._id}/>
+                <ProfileDetail pet={pet} userId={context.state.userLogged._id} history={history}/>
             ) : (<p>Loading...</p>)}
         </>
 

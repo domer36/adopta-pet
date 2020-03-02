@@ -1,7 +1,18 @@
-import React from 'react'
-import { Badge, Button } from '@chakra-ui/core'
+import React, { useState } from 'react'
+import { Badge, Button, useToast } from '@chakra-ui/core'
+import PET_SERVICE from '../../services/petService'
 
-function ProfileDetail({pet, userId}) {
+function ProfileDetail({pet, userId, history}) {
+    const toast = useToast()
+    const [isLoading, handleLoading] = useState(false)
+    const RequestPet = async ()=> {
+        handleLoading(true)
+        const data = await PET_SERVICE.request( pet._id )
+        console.log(data)
+        handleLoading(false)
+        toast({title: 'Request created successfully', status: 'success'})
+        history.push('/profile')
+    }
     return (
         <div className="profile-pet">
                     <img className="portrait" src={pet.image} alt={pet.name} />
@@ -31,7 +42,7 @@ function ProfileDetail({pet, userId}) {
          
                         </div>
                         { pet.user !== userId ? (
-                            <Button variantColor="purple">Adoptar</Button>
+                            <Button isLoading={isLoading} loadingText="Sending request" onClick={RequestPet}  variantColor="purple">Solicitar Adopción</Button>
                         ) : (
                             <p>Ver solicitudes</p>
                         )}

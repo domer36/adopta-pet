@@ -14,7 +14,9 @@ const PET_SERVICE = {
 
     random: async () => await service.get('/random'),
 
-    create: async (newPet) => await service.post('/', newPet)
+    create: async (newPet) => await service.post('/', newPet),
+
+    request: async (idPet) => await service.put('/request/' + idPet)
 }
 
 export default PET_SERVICE

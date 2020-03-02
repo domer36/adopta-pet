@@ -37,6 +37,6 @@ exports.PutRequest = async (req, res) => {
     const {id} = req.params
     const {_id: requester} = req.user
 
-    const pet = await Pet.update({_id:id}, {$push: {requester}})
+    const pet = await Pet.update({_id:id}, {$addToSet: {requester}})
     res.status(201).json({pet})
 }
