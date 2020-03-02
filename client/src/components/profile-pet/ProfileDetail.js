@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Badge, Button, useToast } from '@chakra-ui/core'
+import { Badge, Button, useToast, Alert, Flex, Avatar, Box, Text } from '@chakra-ui/core'
 import PET_SERVICE from '../../services/petService'
 
 function ProfileDetail({pet, userId, history}) {
@@ -8,7 +8,7 @@ function ProfileDetail({pet, userId, history}) {
     const RequestPet = async ()=> {
         handleLoading(true)
         const data = await PET_SERVICE.request( pet._id )
-        console.log(data)
+
         handleLoading(false)
         toast({title: 'Request created successfully', status: 'success'})
         history.push('/profile')
@@ -44,7 +44,32 @@ function ProfileDetail({pet, userId, history}) {
                         { pet.user !== userId ? (
                             <Button isLoading={isLoading} loadingText="Sending request" onClick={RequestPet}  variantColor="purple">Solicitar Adopción</Button>
                         ) : (
-                            <p>Ver solicitudes</p>
+                            <>
+                                {pet.requester.length && (
+                                    <>
+                                    <Alert status="warning">Solicitudes</Alert>
+                                    {pet.requester.map( request => (
+                                        <Flex key={request._id} padding="5px 8px">
+                                        <Avatar src={request.user.photoURL} />
+                                        <Box ml="3">
+                                          <Text fontWeight="bold">
+                                            {request.user.username}
+                                            <Badge ml="1" variantColor="green">
+                                              {request.status}
+                                            </Badge>
+                                          </Text>
+                                          {request.status === 'pending' && (
+                                            <Box fontSize="sm" justifyContent="space-evenly" display="flex">
+                                                <Button variant="outline" variantColor="green" size="xs">Accept</Button>
+                                                <Button variant="outline" variantColor="red" size="xs">Deny</Button>
+                                            </Box>
+                                          )}
+                                        </Box>
+                                      </Flex>
+                                    ))}
+                                    </>
+                                )}
+                            </>
                         )}
                     </div>
                 </div>

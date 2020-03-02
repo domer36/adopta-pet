@@ -44,14 +44,11 @@ exports.PutRequest = async (req, res) => {
     const {_id: requester} = req.user
 
     const foundRequest = await Request.find({$and: [{user: requester}, {pet: id}]})
-    console.log(foundRequest);
-    
     
     if(!foundRequest.length) {
         Request.create({user: requester, pet: id}).then( async request => {
             await Pet.updateOne({_id:id}, {$addToSet: {requester: request._id}})
             await User.updateOne({_id: requester}, {$addToSet: {pets_requested: request._id}})
-            console.log('aqui');
             
             return res.status(201).json({request})
         }).catch(err => console.log('error', err))
