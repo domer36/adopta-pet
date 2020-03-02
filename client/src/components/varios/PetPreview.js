@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image } from '@chakra-ui/core'
+import { Image, AvatarBadge, Badge } from '@chakra-ui/core'
 import { Link, withRouter } from 'react-router-dom'
 
 function PetPreview({pet, ShowName, size}) {
@@ -18,9 +18,10 @@ function PetPreview({pet, ShowName, size}) {
                 alt={pet.name}
                 />
                 {ShowName ?(
+                
                     <span>{pet.name}</span>
 
-                ):(null)}
+                ):(<Badge rounded="180px" size="1.5rem" marginTop="-50px" justifySelf="flex-end">{pet.requester.length || 0}</Badge>)}
         </Link>
     )
 }
