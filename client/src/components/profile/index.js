@@ -8,23 +8,21 @@ function Profile({history}) {
     const toast = useToast()
 
     AUTH_SERVICE.loggedIn()
-        .catch((err)=>{
-            toast({title: 'Log in first', duration: 2000, status: 'error'})
-            history.push('/login')
-        })
-
-   
+    .catch((err)=>{
+        toast({title: 'Log in first', duration: 2000, status: 'error'})
+        history.push('/login')
+    })
 
     return (
         <MyContext.Consumer>
             {context =>{
                 context.updateProfile()
-                return ( <>
-
-                            {context.state.userLogged 
-                            ? <ShowProfile profile={context.state.userLogged} history={history} /> 
-                            : (<>{history.push('/login')}</>)}
-                        </>)
+                return ( 
+                <>
+                    {context.state.userLogged 
+                    ? <ShowProfile profile={context.state.userLogged} history={history} /> 
+                    : (<>{history.push('/login')}</>)}
+                </>)
             }}
         </MyContext.Consumer>
     )

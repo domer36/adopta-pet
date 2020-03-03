@@ -1,9 +1,10 @@
-import React, { useState, createRef } from 'react'
+import React, { useState, createRef, useLayoutEffect } from 'react'
 import { Button, Text, Stack, Input, Textarea, Switch, InputGroup, InputLeftAddon, useToast, Box } from '@chakra-ui/core'
 import PET_SERVICE from '../../services/petService'
 import AUTH_SERVICE from '../../services/authService'
-import mapboxgl from 'mapbox-gl'
-import Geocoder from 'mapbox-gl-geocoder'
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl'
+import Geocoder from 'mapbox-gl-geocoder/dist/mapbox-gl-geocoder.min.js'
+import 'mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
 
 const initNewPet = {
     name: '',
@@ -27,27 +28,37 @@ function PetRegister({history}) {
     const [filePhoto, handleFilePhoto] = useState()
     const [imageTemp, handleImageTemp] = useState()
     const [newPet, handleNewPet] = useState(initNewPet)
+    const [coordinates, setCoordinates] = useState([0, 0])
 
     const mapContainer = createRef()
+    let map = null
     mapboxgl.accessToken = 'pk.eyJ1IjoiY2Zkcjg2IiwiYSI6ImNrNjgyb21tZDAwbnIzbHJzZTd0M2I2djMifQ.cfGqa7w2EEaJjy4TZigszw'
     
-    const map = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/streets-v11'
-    })
-
-    map.addControl(
-        new Geocoder({
-            accessToken: mapboxgl.accessToken,
-            mapboxgl: mapboxgl
+    useLayoutEffect(()=> {
+        map = new mapboxgl.Map({
+            container: mapContainer.current,
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: coordinates,
+            zoom: 15
         })
-    );
+
+        map.addControl(
+            new Geocoder({
+                accessToken: mapboxgl.accessToken,
+                mapboxgl: mapboxgl
+            })
+        )
+        map.on('moveend', ( {target:{transform:{center}}} )=> setCoordinates([center.lng, center.lat]))
+
+        new mapboxgl.Marker().setLngLat(coordinates).addTo(map)
+    },[coordinates])
+
 
     AUTH_SERVICE.loggedIn()
-        .catch((err)=>{
-            toast({title: 'Log in first', duration: 2000, status: 'error'})
-            history.push('/login')
-        })
+    .catch((err)=>{
+        toast({title: 'Log in first', duration: 2000, status: 'error'})
+        history.push('/login')
+    })
 
     
 
@@ -84,6 +95,8 @@ function PetRegister({history}) {
             const formData = new FormData()
             formData.append('photoURL', filePhoto)
             formData.append('info', JSON.stringify(newPet))
+            formData.append('lng', coordinates[0])
+            formData.append('lat', coordinates[1])
 
             await PET_SERVICE.create( formData ).catch(err => (toast({title: 'Has an error to register', status: 'error'})))
             
@@ -169,6 +182,7 @@ function PetRegister({history}) {
                             checked={newPet.details.esterilizado || false}/>  
                     </Stack>
                     <Stack>
+                        <Text>Indica la direccion</Text>
                         <Box as='div' ref={mapContainer} width="100%" height="200px" />
                     </Stack>
                 </div>
