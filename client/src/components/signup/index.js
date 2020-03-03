@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { MyContext } from '../../Context'
 import { Link } from 'react-router-dom'
-import { Button, useToast, Spinner, InputGroup, InputLeftElement, Text, Stack, Input } from "@chakra-ui/core";
+import { Button, useToast, InputGroup, InputLeftElement, Text, Stack, Input } from "@chakra-ui/core";
 import {FaUser, FaKey, FaCalendar} from 'react-icons/fa'
 import {MdEmail} from 'react-icons/md'
 

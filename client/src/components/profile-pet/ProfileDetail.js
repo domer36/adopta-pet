@@ -7,7 +7,7 @@ function ProfileDetail({pet, userId, history}) {
     const [isLoading, handleLoading] = useState(false)
     const RequestPet = async ()=> {
         handleLoading(true)
-        const data = await PET_SERVICE.request( pet._id )
+        await PET_SERVICE.request( pet._id )
 
         handleLoading(false)
         toast({title: 'Request created successfully', status: 'success'})

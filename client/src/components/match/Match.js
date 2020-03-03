@@ -8,14 +8,6 @@ function Match({history}) {
     const context = useContext(MyContext)
     const [pet, handlePet] = useState({})
 
-    const getRandom = async () => {
-        const {data: {pet}} = await PET_SERVICE.random()
-        handlePet(pet)
-    }
-
-    const nextPet = ()=> getRandom()
-    const viewPet = (id) => history.push('/profile-pet/'+ id)
-
     useEffect(()=> {
         AUTH_SERVICE.loggedIn().then( ({data: user}) => {            
             if(!user){ history.push('/login') 
@@ -23,9 +15,18 @@ function Match({history}) {
         )
     },[history])
 
+    const getRandom = async () => {
+        const {data: {pet}} = await PET_SERVICE.random()
+        handlePet(pet)
+    }
+
+    const nextPet = ()=> getRandom()
+    const viewPet = (id) => history.push(`/profile-pet/${id}`)
+
     return (
         <>
-            {(context.state.loading ? <div className="loading"><Spinner /></div> : null)}
+            {( context.state.loading && (<div className="loading"><Spinner /></div>) )}
+
             <header><h2>Find your pet</h2></header>
             <Stack direction="column" alignItems="center" h="100%" padding="20px">
                 <Image className="match-image"

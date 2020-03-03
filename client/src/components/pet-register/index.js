@@ -39,9 +39,9 @@ function PetRegister({history}) {
             container: mapContainer.current,
             style: 'mapbox://styles/mapbox/streets-v11',
             center: coordinates,
-            zoom: 15
+            
         })
-
+        map.setZoom =2
         map.addControl(
             new Geocoder({
                 accessToken: mapboxgl.accessToken,

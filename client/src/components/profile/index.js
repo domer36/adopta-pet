@@ -95,15 +95,26 @@ function ShowProfile({history, profile: {photoURL, username, birth, description}
                     display: 'flex',
                     flexWrap:'wrap',
                     justifyContent: 'space-evenly',
-                    width: "100%",
-                    
-                    
+                    width: "100%"
                 }}>
                     {pets_register.map( pet => <PetPreview size="100px" key={pet._id} pet={pet} />)}
+
                 </div>
                 <input type="file" name="photoURL" onChange={handleChangePhotoURL} hidden/>
-                <Button leftIcon="edit" variantColor="purple" mt="2" marginBottom="50px" width="50%" alignSelf="center" onClick={()=>history.push("/pet-register")}>Registrar Nuevo</Button>
-                <Button variantColor="red" marginBottom="50px" onClick={()=>history.push("/login")}>Log out</Button>
+                <Button 
+                    leftIcon="edit" 
+                    variantColor="purple" 
+                    mt="2" 
+                    marginBottom="50px" 
+                    width="50%" 
+                    alignSelf="center" 
+                    onClick={()=>history.push("/pet-register")}
+                >Registrar Nuevo</Button>
+                <Button 
+                    variantColor="red" 
+                    marginBottom="50px" 
+                    onClick={()=>history.push("/login")}
+                >Log out</Button>
                 </Stack>
         </div>
 

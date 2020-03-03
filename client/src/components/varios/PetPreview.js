@@ -1,6 +1,6 @@
 import React from 'react'
-import { Image, AvatarBadge, Badge } from '@chakra-ui/core'
-import { Link, withRouter } from 'react-router-dom'
+import { Image, Badge } from '@chakra-ui/core'
+import { Link } from 'react-router-dom'
 
 function PetPreview({pet, ShowName, size}) {
     return (
