@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { MyContext } from '../../Context'
-import { Text, useToast, Button, Textarea, Stack, Alert, Box, Badge, Image, Flex } from '@chakra-ui/core';
-import { Link } from 'react-router-dom';
+import { Text, useToast, Button, Stack, Alert, Badge, Image, Flex } from '@chakra-ui/core';
 import AUTH_SERVICE from '../../services/authService';
 import PetPreview from '../varios/PetPreview';
 
@@ -106,6 +105,7 @@ function ShowProfile({history, profile: {photoURL, username, birth, description}
                 </div>
                 <input type="file" name="photoURL" onChange={handleChangePhotoURL} hidden/>
                 <Button leftIcon="edit" variantColor="purple" mt="2" marginBottom="50px" width="50%" alignSelf="center" onClick={()=>history.push("/pet-register")}>Registrar Nuevo</Button>
+                <Button variantColor="red" marginBottom="50px" onClick={()=>history.push("/login")}>Log out</Button>
                 </Stack>
         </div>
 
