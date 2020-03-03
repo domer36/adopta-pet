@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
-import { Button, Text, Stack, Input, Textarea, Switch, InputGroup, InputLeftAddon, useToast } from '@chakra-ui/core'
+import React, { useState, createRef } from 'react'
+import { Button, Text, Stack, Input, Textarea, Switch, InputGroup, InputLeftAddon, useToast, Box } from '@chakra-ui/core'
 import PET_SERVICE from '../../services/petService'
 import AUTH_SERVICE from '../../services/authService'
+import mapboxgl from 'mapbox-gl'
+import Geocoder from 'mapbox-gl-geocoder'
 
 const initNewPet = {
     name: '',
@@ -17,8 +19,29 @@ const initNewPet = {
     }
 }
 
+
+
 function PetRegister({history}) {
     const toast = useToast()
+    const [isLoading, handleLoading] = useState(false)
+    const [filePhoto, handleFilePhoto] = useState()
+    const [imageTemp, handleImageTemp] = useState()
+    const [newPet, handleNewPet] = useState(initNewPet)
+
+    const mapContainer = createRef()
+    mapboxgl.accessToken = 'pk.eyJ1IjoiY2Zkcjg2IiwiYSI6ImNrNjgyb21tZDAwbnIzbHJzZTd0M2I2djMifQ.cfGqa7w2EEaJjy4TZigszw'
+    
+    const map = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: 'mapbox://styles/mapbox/streets-v11'
+    })
+
+    map.addControl(
+        new Geocoder({
+            accessToken: mapboxgl.accessToken,
+            mapboxgl: mapboxgl
+        })
+    );
 
     AUTH_SERVICE.loggedIn()
         .catch((err)=>{
@@ -26,13 +49,9 @@ function PetRegister({history}) {
             history.push('/login')
         })
 
-    const [isLoading, handleLoading] = useState(false)
-    const [filePhoto, handleFilePhoto] = useState()
-    const [imageTemp, handleImageTemp] = useState()
-    const [newPet, handleNewPet] = useState(initNewPet)
+    
 
     const reader = new FileReader()
-    
     const ChangeImage = (file) => {
         if(file){
             handleFilePhoto( file )
@@ -148,6 +167,9 @@ function PetRegister({history}) {
                             onChange={handleNewPetInput} 
                             name="esterilizado"
                             checked={newPet.details.esterilizado || false}/>  
+                    </Stack>
+                    <Stack>
+                        <Box as='div' ref={mapContainer} width="100%" height="200px" />
                     </Stack>
                 </div>
             </div>
