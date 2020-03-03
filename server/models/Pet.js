@@ -7,6 +7,10 @@ const PetSchema = new Schema({
         breed: String,
         tags: [String],
         description: String,
+        location: {
+            address: String,
+            coordinates: []
+        },
         details: { 
             vacunado: Boolean, 
             desparacitado: Boolean, 
