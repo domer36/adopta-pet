@@ -1,4 +1,4 @@
-import React, { useState, createRef, useLayoutEffect } from 'react'
+import React, { useState, createRef, useLayoutEffect, useEffect, useRef } from 'react'
 import { Button, Text, Stack, Input, Textarea, Switch, InputGroup, InputLeftAddon, useToast, Box } from '@chakra-ui/core'
 import PET_SERVICE from '../../services/petService'
 import AUTH_SERVICE from '../../services/authService'
@@ -30,7 +30,7 @@ function PetRegister({history}) {
     const [newPet, handleNewPet] = useState(initNewPet)
     const [coordinates, setCoordinates] = useState([0, 0])
 
-    const mapContainer = createRef()
+    const mapContainer = useRef()
     let map = null
     mapboxgl.accessToken = 'pk.eyJ1IjoiY2Zkcjg2IiwiYSI6ImNrNjgyb21tZDAwbnIzbHJzZTd0M2I2djMifQ.cfGqa7w2EEaJjy4TZigszw'
     
@@ -39,9 +39,9 @@ function PetRegister({history}) {
             container: mapContainer.current,
             style: 'mapbox://styles/mapbox/streets-v11',
             center: coordinates,
+            zoom:15
             
         })
-        map.setZoom =2
         map.addControl(
             new Geocoder({
                 accessToken: mapboxgl.accessToken,
@@ -51,8 +51,7 @@ function PetRegister({history}) {
         map.on('moveend', ( {target:{transform:{center}}} )=> setCoordinates([center.lng, center.lat]))
 
         new mapboxgl.Marker().setLngLat(coordinates).addTo(map)
-    },[coordinates])
-
+    },[map, coordinates])
 
     AUTH_SERVICE.loggedIn()
     .catch((err)=>{
@@ -183,7 +182,7 @@ function PetRegister({history}) {
                     </Stack>
                     <Stack>
                         <Text>Indica la direccion</Text>
-                        <Box as='div' ref={mapContainer} width="100%" height="200px" />
+                        <Box as='div' ref={mapContainer} id="map" width="100%" height="200px" />
                     </Stack>
                 </div>
             </div>
