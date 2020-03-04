@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Badge, Button, useToast, Alert, Flex, Avatar, Box, Text } from '@chakra-ui/core'
 import PET_SERVICE from '../../services/petService'
+import REQUEST_SERVICE from '../../services/requestService'
 
-function ProfileDetail({pet, userId, history}) {
+function ProfileDetail({pet, userId, history, match}) {
     const toast = useToast()
     const [isLoading, handleLoading] = useState(false)
     const RequestPet = async ()=> {
@@ -13,6 +14,14 @@ function ProfileDetail({pet, userId, history}) {
         toast({title: 'Request created successfully', status: 'success'})
         history.push('/profile')
     }
+
+    const Agreement = async (req_id, status) => {
+        await REQUEST_SERVICE.agreement(req_id, status).catch( () => toast({title: 'Error unexpected'}))
+        toast({title: 'Sent successfully', status: 'success'})
+        console.log(history, match);
+        
+    }
+
     return (
         <div className="profile-pet">
                     <img className="portrait" src={pet.image} alt={pet.name} />
@@ -60,8 +69,8 @@ function ProfileDetail({pet, userId, history}) {
                                           </Text>
                                           {request.status === 'pending' && (
                                             <Box fontSize="sm" justifyContent="space-evenly" display="flex">
-                                                <Button variant="outline" variantColor="green" size="xs">Accept</Button>
-                                                <Button variant="outline" variantColor="red" size="xs">Deny</Button>
+                                                <Button onClick={()=>agreement(request._id, 'accept')} variant="outline" variantColor="green" size="xs">Accept</Button>
+                                                <Button onClick={()=>agreement(request._id, 'deny')} variant="outline" variantColor="red" size="xs">Deny</Button>
                                             </Box>
                                           )}
                                         </Box>
