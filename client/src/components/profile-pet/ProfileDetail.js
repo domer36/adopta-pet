@@ -3,7 +3,7 @@ import { Badge, Button, useToast, Alert, Flex, Avatar, Box, Text } from '@chakra
 import PET_SERVICE from '../../services/petService'
 import REQUEST_SERVICE from '../../services/requestService'
 
-function ProfileDetail({pet, userId, history, match}) {
+function ProfileDetail({pet, userId, history}) {
     const toast = useToast()
     const [isLoading, handleLoading] = useState(false)
     const RequestPet = async ()=> {
@@ -15,11 +15,11 @@ function ProfileDetail({pet, userId, history, match}) {
         history.push('/profile')
     }
 
-    const Agreement = async (req_id, status) => {
-        await REQUEST_SERVICE.agreement(req_id, status).catch( () => toast({title: 'Error unexpected'}))
-        toast({title: 'Sent successfully', status: 'success'})
-        console.log(history, match);
-        
+    const Agreement = (req_id, status) => {
+        console.log(req_id, status)
+        REQUEST_SERVICE.agreement(req_id, status).catch( () => toast({title: 'Error unexpected'}))
+        .then(() => toast({title: 'Sent successfully', status: 'success'}))
+        return history.push('/profile')        
     }
 
     return (
@@ -69,8 +69,8 @@ function ProfileDetail({pet, userId, history, match}) {
                                           </Text>
                                           {request.status === 'pending' && (
                                             <Box fontSize="sm" justifyContent="space-evenly" display="flex">
-                                                <Button onClick={()=>agreement(request._id, 'accept')} variant="outline" variantColor="green" size="xs">Accept</Button>
-                                                <Button onClick={()=>agreement(request._id, 'deny')} variant="outline" variantColor="red" size="xs">Deny</Button>
+                                                <Button onClick={()=>Agreement(request._id, 'accepted')} variant="outline" variantColor="green" size="xs">Accept</Button>
+                                                <Button onClick={()=>Agreement(request._id, 'denied')} variant="outline" variantColor="red" size="xs">Deny</Button>
                                             </Box>
                                           )}
                                         </Box>
