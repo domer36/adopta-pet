@@ -17,10 +17,10 @@ class Home extends Component {
       <MyContext.Consumer>
         { () => (
           <>
-            <header><h2>Search</h2></header>
+            <header><h2 style={{fontSize:"2rem", color:"white"}}>SEARCH</h2></header>
             {pets && (
             <div className="search_pets">
-              {pets.map((pet, i) => <PetPreview ShowName size="25vw" key={i} pet={pet} />)}
+              {pets.map((pet, i) => <PetPreview ShowName size="100%" key={i} pet={pet} />)}
             </div>
             )}
           </>

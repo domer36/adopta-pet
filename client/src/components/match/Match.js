@@ -27,8 +27,8 @@ function Match({history}) {
         <>
             {( context.state.loading && (<div className="loading"><Spinner /></div>) )}
 
-            <header><h2>Find your pet</h2></header>
-            <Stack direction="column" alignItems="center" h="100%" padding="20px">
+            <header><h2 style={{fontSize:"2rem", color:"white"}} >Find your pet</h2></header>
+            <Stack display="flex" justifyContent="center" alignContent="center" direction="column" alignItems="center" height="90%" width="100%" background="purple.400" borderColor="purple.400">
                 <Image className="match-image"
                     size="xs"
                     name={pet.name}
@@ -38,7 +38,7 @@ function Match({history}) {
                     <Button size="md" w="25%" variantColor="green" onClick={()=> viewPet(pet._id)}>Sí</Button>
                     <Button size="md" w="25%" variantColor="red" onClick={nextPet}>No</Button>
                 </Stack>
-                </Stack>
+            </Stack>
         </>
     )
 }

@@ -7,11 +7,11 @@ function PetPreview({pet, ShowName, size}) {
         <Link to={`/profile-pet/${pet._id}`} style={{
             display: 'inline-block',
             flexDirection: 'column',
-            margin: '5px',
-            width:{size}
+            width:{size},
+            paddingBottom: '40px',
+            marginBottom: '10px'
         }}>
             <Image
-                rounded="10px"
                 width={size}
                 size={size}
                 src={pet.image}

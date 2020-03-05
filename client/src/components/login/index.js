@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { MyContext } from '../../Context'
-import {  useToast, Button, Input, Stack, InputGroup, InputLeftElement, Text } from '@chakra-ui/core'
+import {  useToast, Button, Input, Stack, InputGroup, InputLeftElement, Text, Flex, Box } from '@chakra-ui/core'
 import { Link } from 'react-router-dom'
 import { FaUser, FaKey } from 'react-icons/fa';
 
@@ -16,8 +16,8 @@ function Login(props) {
     return (
         <MyContext.Consumer>
             {context => (
-                <div className="loginForm">
-                    <Text fontWeight="bold">Log In</Text>
+                <Box flexGrow="1" className="loginForm">
+                    <Text fontWeight="bold" color="purple.500" marginBottom="20px" fontSize="2rem">Log In</Text>
                     <Stack spacing={4}>
                         <InputGroup>
                             <InputLeftElement children={<FaUser color="silver"/>} />
@@ -27,7 +27,8 @@ function Login(props) {
                                 placeholder="Email" 
                                 name="email" 
                                 value={context.state.sign_form.email} 
-                                onChange={context.handleSingChange}/>
+                                onChange={context.handleSingChange}
+                                focusBorderColor="purple.400"/>
                         </InputGroup>
 
                         <InputGroup>
@@ -38,13 +39,14 @@ function Login(props) {
                                 placeholder="Password" 
                                 name="password" 
                                 value={context.state.sign_form.password} 
-                                onChange={context.handleSingChange}/>
+                                onChange={context.handleSingChange}
+                                focusBorderColor="purple.400"/>
                         </InputGroup>
                         <Button rounded="10px" isLoading={context.state.loading} loadingText="Please wait..." variantColor="purple"  onClick={Login}>Login</Button>
                     </Stack>
 
-                    <span>Dont have an account yet, <Link to="/signup"><Text fontWeight="bold">Sign up</Text></Link></span>
-                </div>
+                    <span>Don't have an account yet, <Link to="/signup"><Text fontWeight="bold" color="purple.400">Sign up</Text></Link></span>
+                </Box>
             )}
         </MyContext.Consumer>
     )

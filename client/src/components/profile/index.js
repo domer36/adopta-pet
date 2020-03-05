@@ -70,8 +70,8 @@ function ShowProfile({history, profile: {photoURL, username, birth, description}
                     {pets_requested.length 
                         ? (
                             <>
-                                <Alert status="info">Solicitudes</Alert>
-                                <Flex flexDirection="row" wrap="wrap" width="100%" padding="5px 8px" justifyContent="space-between">
+                                <Alert backgroundColor="#242240;" color="white" padding="20px 10px" fontWeight="bold" fontSize="1.5rem" width="100%" alignSelf="center" boxSizing="border-box">Solicitudes</Alert>
+                                <Flex flexDirection="row" wrap="wrap" width="80%" alignSelf="center" padding="5px 8px" justifyContent="space-evenly">
 
                                     {pets_requested.map( request => (
                                         <Stack key={request._id} size="110px">
@@ -85,9 +85,9 @@ function ShowProfile({history, profile: {photoURL, username, birth, description}
                         : (null)
                     }
                 
-                <Stack padding="5px 8px">
+                <Stack padding="5px 0px">
                 {pets_register.length 
-                    ? (<Alert status="info">Mascotas Publicadas</Alert>) 
+                    ? (<Alert backgroundColor="#242240;" color="white" padding="0px 10px" fontWeight="bold" fontSize="1.5rem">Mascotas Publicadas</Alert>) 
                     : (<Alert status="warning">No tienes mascotas publicadas</Alert>)
                 }
 

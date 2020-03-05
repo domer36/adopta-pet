@@ -32,32 +32,32 @@ function Signup(props) {
         <MyContext.Consumer>
             {context => (
                 <div className="signupForm">
-                     <Text fontWeight="bold">Sign Up</Text>
+                     <Text fontWeight="bold" color="purple.500" marginBottom="20px" fontSize="2rem">Sign Up</Text>
                      
                      <Stack spacing={4}>
                         <InputGroup>
                             <InputLeftElement children={<FaUser color="silver"/>} />
-                            <Input rounded="10px" type="text" name="username" placeholder="Name" value={context.state.sign_form.username} onChange={context.handleSingChange}/>
+                            <Input rounded="10px" type="text" name="username" placeholder="Name" focusBorderColor="purple.400" value={context.state.sign_form.username} onChange={context.handleSingChange}/>
                         </InputGroup>
                         <InputGroup>
                             <InputLeftElement children={<MdEmail color="silver"/>} />
-                            <Input rounded="10px" type="text" name="email" placeholder="Email" value={context.state.sign_form.email} onChange={context.handleSingChange}/>
+                            <Input rounded="10px" type="text" name="email" placeholder="Email"  focusBorderColor="purple.400" value={context.state.sign_form.email} onChange={context.handleSingChange}/>
                         </InputGroup>
                         <InputGroup>
                             <InputLeftElement children={<FaCalendar color="silver"/>} />
-                            <Input rounded="10px" type="date" name="birth" placeholder="Date of Birth" value={context.state.sign_form.birth} onChange={context.handleSingChange}/>
+                            <Input rounded="10px" type="date" name="birth" placeholder="Date of Birth" focusBorderColor="purple.400" value={context.state.sign_form.birth} onChange={context.handleSingChange}/>
                         </InputGroup>
                         <InputGroup>
                             <InputLeftElement children={<FaKey color="silver"/>} />
-                            <Input rounded="10px" type="password" name="password" placeholder="Password" value={context.state.sign_form.password} onChange={context.handleSingChange}/>
+                            <Input rounded="10px" type="password" name="password" placeholder="Password" focusBorderColor="purple.400" value={context.state.sign_form.password} onChange={context.handleSingChange}/>
                         </InputGroup>
                         <InputGroup>
                             <InputLeftElement children={<FaKey color="silver"/>} />
-                            <Input rounded="10px" type="password" name="confirm_password"  placeholder="Confirm password" value={context.state.sign_form.confirm_password} onChange={context.handleSingChange}/>
+                            <Input rounded="10px" type="password" name="confirm_password" focusBorderColor="purple.400"  placeholder="Confirm password" value={context.state.sign_form.confirm_password} onChange={context.handleSingChange}/>
                         </InputGroup>
-                        <Button rounded="10px" isLoading={context.state.loading} loadingText="Please wait" onClick={Register} variantColor="purple">Register</Button>
+                        <Button rounded="10px" isLoading={context.state.loading} fontWeight="bold"  loadingText="Please wait" onClick={Register} variantColor="purple">Register</Button>
                      </Stack>
-                     <span>have an account, <Link to="/login"><Text fontWeight="bold">Sign in</Text></Link></span>
+                     <span>Have an account, <Link to="/login"><Text fontWeight="bold" color="purple.400">Sign in</Text></Link></span>
                 </div>
             )}
         </MyContext.Consumer>
