@@ -55,8 +55,8 @@ exports.PutRequest = async (req, res) => {
             await Pet.updateOne({_id:id}, {$addToSet: {requester: request._id}})
             await User.updateOne({_id: requester}, {$addToSet: {pets_requested: request._id}})
             
-            return res.status(201).json({request})
-        }).catch(err => console.log('error', err))
+            return re.status(201).json({request})
+        }).catch(err => res.status(500).send({err}))
     }
-    res.status(500).json({mag: 'You already have a request...'})
+    res.status(201).json({mag: 'Updating preview request...'})
 }
