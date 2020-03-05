@@ -58,5 +58,5 @@ exports.PutRequest = async (req, res) => {
             return res.status(201).json({request})
         }).catch(err => console.log('error', err))
     }
-
+    res.status(500).json({mag: 'You already have a request...'})
 }

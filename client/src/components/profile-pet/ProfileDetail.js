@@ -16,9 +16,9 @@ function ProfileDetail({pet, userId, history}) {
     }
 
     const Agreement = (req_id, status) => {
-        console.log(req_id, status)
-        REQUEST_SERVICE.agreement(req_id, status).catch( () => toast({title: 'Error unexpected'}))
+        REQUEST_SERVICE.agreement(req_id, status)
         .then(() => toast({title: 'Sent successfully', status: 'success'}))
+        .catch( () => toast({title: 'Error unexpected'}))
         return history.push('/profile')        
     }
 

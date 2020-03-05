@@ -1,7 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Home from './components/home/Home';
-import NotFound from './components/404/NotFound.js';
 import Context from './Context';
 import Navbar from './components/Navbar';
 import Login from './components/login';
@@ -26,7 +25,7 @@ const Router = () => (
             <Route exact path="/match" component={Match} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
-            <Route component={NotFound} />
+            <Route component={() => (<Redirect to='/login' />)} />
           </Switch>
       </ThemeProvider>
     </Context>

@@ -1,4 +1,4 @@
-import React, { useState, createRef, useLayoutEffect, useEffect, useRef } from 'react'
+import React, { useState, useLayoutEffect, useRef } from 'react'
 import { Button, Text, Stack, Input, Textarea, Switch, InputGroup, InputLeftAddon, useToast, Box } from '@chakra-ui/core'
 import PET_SERVICE from '../../services/petService'
 import AUTH_SERVICE from '../../services/authService'

@@ -8,10 +8,6 @@ process.env.NODE_ENV === 'production'
 const service = axios.create({withCredentials: true, baseURL})
 
 const REQUEST_SERVICE = {
-    agreement: async (id, status)=> {
-        console.log('service', id, status);
-        
-        await service.put(`/${id}/${status}`,{})}
+    agreement: async (id, status) => await service.put(`/${id}/${status}`,{})
 }
-
 export default REQUEST_SERVICE

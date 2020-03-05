@@ -71,9 +71,7 @@ class Context extends Component {
     }
 
     getPets = async ()=>{
-        const {data} = await PET_SERVICE.search().catch( err=> ({data:null}))
-        console.log(data);
-        
+        const {data} = await PET_SERVICE.search().catch( err=> ({data:null}))        
         this.setState({pets: (data) ? data.pets : []})
     }
 
