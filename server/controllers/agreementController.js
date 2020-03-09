@@ -1,11 +1,19 @@
 const Request = require('../models/Request')
 
 exports.putAgreement = async (req, res) => {
-    const {id, status} = req.params
-    if( status === 'accepted' ) await Request.updateMany({$and: [{pet: id},{status: 'pending'}]}, {status: 'denied'})
+    const {id: _id, status} = req.params
 
-    const awaitres = await Request.updateOne({_id: id}, {status}).catch( err => res.status(500).json({msg: err}))
-    console.log({awaitres});
-    
-    res.status(200).json({msg: 'Update successfully'})
+    if( status === 'denied'){
+        await Request.updateOne({ _id }, {status})
+
+        return res.status(201).json({msg: 'Update successfully'})
+    }else if( status === 'accepted' ){
+        const { pet } = await Request.findOneAndUpdate({ _id },{adopted: true},{new:true})
+
+        await Request.updateMany({pet}, {status: 'denied'})
+        await Request.updateOne({ _id }, {status})
+
+        return res.status(201).json({msg: 'Update successfully'})
+    }
+    return res.status(500).json({msg: 'Error to update'})
 }

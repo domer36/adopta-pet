@@ -25,7 +25,11 @@ const PetSchema = new Schema({
                 type: Schema.Types.ObjectId,
                 ref: 'Request'
             }
-        ]
+        ],
+        adopted: {
+            type: Boolean,
+            default: false
+        }
 })
 
 module.exports = model('Pet', PetSchema)
