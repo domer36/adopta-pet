@@ -235,6 +235,20 @@ header{
   font-size: .9rem;
 }
 
+.pet_adopted {
+  width: 100%;
+  border-radius: 0;
+  z-index: 99;
+}
+.pet_adopted_img {
+  opacity: 0.5;
+}
+
+.pet_pending {
+  width: 1.5rem;
+  border-radius: 180px;
+}
+
 .create-pet-register {
   width: 100vw;
   height: 90vh;

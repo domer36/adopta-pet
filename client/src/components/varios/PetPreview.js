@@ -16,12 +16,13 @@ function PetPreview({pet, ShowName, size}) {
                 size={size}
                 src={pet.image}
                 alt={pet.name}
+                className={pet.adopted ? 'pet_adopted_img' : 'pet_pending_img'}
                 />
                 {ShowName ?(
                 
                     <span>{pet.name}</span>
 
-                ):(<Badge variantColor="purple" rounded="180px" size="1.5rem" marginTop="-50px" justifySelf="flex-end">{pet.requester.length || 0}</Badge>)}
+                ):(<Badge className={pet.adopted ? 'pet_adopted' : 'pet_pending'} variantColor="purple" marginTop="-50px" justifySelf="flex-end">{pet.adopted ? 'ADOPTED' : pet.requester.length || 0}</Badge>)}
         </Link>
     )
 }
